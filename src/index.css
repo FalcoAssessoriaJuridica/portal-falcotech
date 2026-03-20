@@ -4,81 +4,75 @@
 
 :root {
     font-family: 'Geist', sans-serif;
-    line-height: 1.5;
-    font-weight: 400;
-
-    color-scheme: dark;
-    color: rgba(255, 255, 255, 0.87);
-
-    font-synthesis: none;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
 }
 
 body {
     margin: 0;
-    display: flex;
-    place-items: center;
-    min-width: 320px;
-    min-height: 100vh;
     background: radial-gradient(circle at center, #18181b 0%, #09090b 100%);
+    color: white;
+    min-height: 100vh;
     overflow-x: hidden;
 }
 
-#root {
-    width: 100%;
+/* Glassmorphism Card Style */
+.glass-card {
+    backdrop-filter: blur(20px);
+    background-color: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(245, 158, 11, 0.1);
+    transition: all 0.5s ease;
 }
 
-@layer components {
-    .glass-card {
-        @apply backdrop-blur-xl bg-white/[0.02] border border-amber-500/10 transition-all duration-500;
-    }
-
-    .glass-card:hover {
-        @apply border-amber-500/40 bg-white/[0.04] shadow-[0_0_30px_rgba(245, 158, 11, 0.1)];
-    }
-
-    .spotlight {
-        position: relative;
-        overflow: hidden;
-    }
-
-    .spotlight::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: radial-gradient(400px circle at var(--mouse-x) var(--mouse-y),
-                rgba(245, 158, 11, 0.1),
-                transparent 40%);
-        z-index: 10;
-        pointer-events: none;
-        opacity: 0;
-        transition: opacity 0.5s ease;
-    }
-
-    .spotlight:hover::before {
-        opacity: 1;
-    }
-
-    .gold-gradient-text {
-        @apply bg-gradient-to-br from-amber-200 via-amber-400 to-amber-600 bg-clip-text text-transparent;
-    }
-
-    .gold-gradient-bg {
-        @apply bg-gradient-to-br from-amber-200 via-amber-400 to-amber-600;
-    }
+.glass-card:hover {
+    border-color: rgba(245, 158, 11, 0.4);
+    background-color: rgba(255, 255, 255, 0.04);
+    box-shadow: 0 0 30px rgba(245, 158, 11, 0.1);
 }
 
-/* Scrollbar customization */
+/* Spotlight Effect */
+.spotlight {
+    position: relative;
+    overflow: hidden;
+}
+
+.spotlight::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(400px circle at var(--mouse-x) var(--mouse-y),
+            rgba(245, 158, 11, 0.1),
+            transparent 40%);
+    z-index: 10;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.spotlight:hover::before {
+    opacity: 1;
+}
+
+/* Custom Text Gradients */
+.gold-gradient-text {
+    background: linear-gradient(to bottom right, #fef3c7, #fbbf24, #d97706);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+/* Scrollbar */
 ::-webkit-scrollbar {
     width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-    @apply bg-zinc-950;
+    background: #09090b;
 }
 
 ::-webkit-scrollbar-thumb {
-    @apply bg-zinc-800 rounded-full hover:bg-amber-500/50;
+    background: #27272a;
+    border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(245, 158, 11, 0.5);
 }
