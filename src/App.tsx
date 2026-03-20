@@ -27,7 +27,7 @@ const projects: Project[] = [
         id: 'erp',
         title: 'ERP Falco Jurídico',
         description: 'Gestão processual completa, controle de prazos e fluxo de trabalho jurídico avançado.',
-        url: 'http://erp.falcotech.com.br',
+        url: 'https://erp.falcotech.com.br',
         icon: <Shield className="w-8 h-8" />,
         category: 'Gestão Jurídica',
         status: 'online'
@@ -36,7 +36,7 @@ const projects: Project[] = [
         id: 'crm',
         title: 'CRM Saas Falco',
         description: 'Pipeline de vendas, gestão de leads e automação de relacionamento com clientes.',
-        url: 'http://crm.falcotech.com.br',
+        url: 'https://crm.falcotech.com.br',
         icon: <Users className="w-8 h-8" />,
         category: 'Vendas & Leads',
         status: 'online'
@@ -45,7 +45,7 @@ const projects: Project[] = [
         id: 'finance',
         title: 'Portal Financeiro',
         description: 'Módulo de faturamento, gestão de contratos e integração com gateways de pagamento.',
-        url: 'http://gatewaypro.falcotech.com.br',
+        url: 'https://gatewaypro.falcotech.com.br',
         icon: <TrendingUp className="w-8 h-8" />,
         category: 'Financeiro',
         status: 'online'
@@ -54,7 +54,7 @@ const projects: Project[] = [
         id: 'lp-rodoviarios',
         title: 'LP Rodoviários',
         description: 'Landing page especializada para motoristas e profissionais de transporte rodoviário.',
-        url: 'http://rodoviarios.falcotech.com.br',
+        url: 'https://rodoviarios.falcotech.com.br',
         icon: <MapPin className="w-8 h-8" />,
         category: 'Marketing LP',
         status: 'online'
@@ -63,19 +63,19 @@ const projects: Project[] = [
         id: 'lp-motoboys',
         title: 'LP Motoboys',
         description: 'Landing page focada em entregadores e pilotos de aplicativo com atendimento via IA.',
-        url: 'http://motoboys.falcotech.com.br',
+        url: 'https://motoboys.falcotech.com.br',
         icon: <Bike className="w-8 h-8" />,
         category: 'Marketing LP',
         status: 'online'
     },
     {
         id: 'rf-cursos',
-        title: 'RF Cursos - App',
+        title: 'RF Cursos (V2.1)',
         description: 'Plataforma de ensino e capacitação para profissionais do setor de serviços.',
         url: 'https://rfcursos.falcotech.com.br/login',
         icon: <Cpu className="w-8 h-8" />,
         category: 'Educação',
-        status: 'beta'
+        status: 'online'
     }
 ];
 
