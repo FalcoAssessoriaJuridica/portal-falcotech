@@ -56,7 +56,7 @@ const projects: Project[] = [
         id: 'lp-rodoviarios',
         title: 'LP Rodoviários',
         description: 'Landing page especializada para motoristas e profissionais de transporte rodoviário.',
-        url: 'https://rodoviarios.falcotech.com.br',
+        url: 'https://lprodoviarios.falcotech.com.br',
         icon: <MapPin className="w-8 h-8" />,
         category: 'Marketing LP',
         status: 'online'
