@@ -1,152 +1,197 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { motion } from 'framer-motion';
 import {
-    Building2,
+    Shield,
     Users,
-    CreditCard,
-    Truck,
-    Bike,
+    TrendingUp,
+    MapPin,
     ExternalLink,
-    ShieldCheck,
-    ArrowRight
+    Cpu,
+    Database,
+    Globe,
+    Bike
 } from 'lucide-react';
 
-interface ProjectCardProps {
+interface Project {
+    id: string;
     title: string;
     description: string;
     url: string;
     icon: React.ReactNode;
-    delay: number;
+    category: string;
+    status: 'online' | 'maintenance' | 'beta';
 }
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ title, description, url, icon, delay }) => (
-    <motion.a
-        href={url}
-        target="_blank"
-        rel="noopener noreferrer"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay }}
-        whileHover={{ y: -8, scale: 1.02 }}
-        className="group relative flex flex-col p-8 rounded-2xl glass transition-all hover:border-[#C5A059]/50 overflow-hidden"
-    >
-        <div className="absolute top-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity">
-            <ExternalLink size={18} className="text-[#C5A059]" />
-        </div>
+const projects: Project[] = [
+    {
+        id: 'erp',
+        title: 'ERP Falco Jurídico',
+        description: 'Gestão processual completa, controle de prazos e fluxo de trabalho jurídico avançado.',
+        url: 'http://erp.falcotech.com.br',
+        icon: <Shield className="w-8 h-8" />,
+        category: 'Gestão Jurídica',
+        status: 'online'
+    },
+    {
+        id: 'crm',
+        title: 'CRM Saas Falco',
+        description: 'Pipeline de vendas, gestão de leads e automação de relacionamento com clientes.',
+        url: 'http://crm.falcotech.com.br',
+        icon: <Users className="w-8 h-8" />,
+        category: 'Vendas & Leads',
+        status: 'online'
+    },
+    {
+        id: 'finance',
+        title: 'Portal Financeiro',
+        description: 'Módulo de faturamento, gestão de contratos e integração com gateways de pagamento.',
+        url: 'http://gatewaypro.falcotech.com.br',
+        icon: <TrendingUp className="w-8 h-8" />,
+        category: 'Financeiro',
+        status: 'online'
+    },
+    {
+        id: 'lp-rodoviarios',
+        title: 'LP Rodoviários',
+        description: 'Landing page especializada para motoristas e profissionais de transporte rodoviário.',
+        url: 'http://rodoviarios.falcotech.com.br',
+        icon: <MapPin className="w-8 h-8" />,
+        category: 'Marketing LP',
+        status: 'online'
+    },
+    {
+        id: 'lp-motoboys',
+        title: 'LP Motoboys',
+        description: 'Landing page focada em entregadores e pilotos de aplicativo com atendimento via IA.',
+        url: 'http://motoboys.falcotech.com.br',
+        icon: <Bike className="w-8 h-8" />,
+        category: 'Marketing LP',
+        status: 'online'
+    },
+    {
+        id: 'rf-cursos',
+        title: 'RF Cursos - App',
+        description: 'Plataforma de ensino e capacitação para profissionais do setor de serviços.',
+        url: 'http://cursos.falcotech.com.br',
+        icon: <Cpu className="w-8 h-8" />,
+        category: 'Educação',
+        status: 'beta'
+    }
+];
 
-        <div className="w-14 h-14 rounded-xl bg-[#C5A059]/10 flex items-center justify-center mb-6 text-[#C5A059] group-hover:bg-[#C5A059] group-hover:text-black transition-colors">
-            {icon}
-        </div>
+const ProjectCard = ({ project, index }: { project: Project; index: number }) => {
+    const cardRef = useRef<HTMLDivElement>(null);
 
-        <h3 className="text-xl font-semibold mb-3 tracking-tight group-hover:text-[#C5A059] transition-colors">{title}</h3>
-        <p className="text-gray-400 text-sm leading-relaxed mb-6 flex-grow">
-            {description}
-        </p>
-
-        <div className="flex items-center text-xs font-semibold tracking-widest uppercase text-[#C5A059] mt-auto">
-            ACESSAR AGORA <ArrowRight size={14} className="ml-2 group-hover:translate-x-1 transition-transform" />
-        </div>
-
-        {/* Subtle glow effect on hover */}
-        <div className="absolute -inset-1 bg-gradient-to-r from-[#C5A059]/20 to-transparent blur-2xl opacity-0 group-hover:opacity-100 transition-opacity -z-10" />
-    </motion.a>
-);
-
-const App: React.FC = () => {
-    const projects = [
-        {
-            title: "ERP Jurídico",
-            description: "Sistema central de gestão de processos, agenda jurídica e controle de documentos.",
-            url: "https://erp.falcotech.com.br",
-            icon: <Building2 size={28} />,
-            delay: 0.2
-        },
-        {
-            title: "CRM de Captação",
-            description: "Plataforma de gestão de leads, automação de funis e dashboards de performance.",
-            url: "https://crm.falcotech.com.br",
-            icon: <Users size={28} />,
-            delay: 0.3
-        },
-        {
-            title: "Gateway Pro",
-            description: "Módulo financeiro integrado para emissão de faturas, links de pagamento e controle de fluxo.",
-            url: "https://gatewaypro.falcotech.com.br",
-            icon: <CreditCard size={28} />,
-            delay: 0.4
-        },
-        {
-            title: "LP Rodoviários",
-            description: "Portal especializado em consultoria jurídica para trabalhadores do transporte rodoviário.",
-            url: "https://rodoviarios.falcotech.com.br",
-            icon: <Truck size={28} />,
-            delay: 0.5
-        },
-        {
-            title: "LP Motoboys",
-            description: "Soluções e orientações jurídicas personalizadas para entregadores e pilotos de moto.",
-            url: "https://motoboys.falcotech.com.br",
-            icon: <Bike size={28} />,
-            delay: 0.6
-        }
-    ];
+    const handleMouseMove = (e: React.MouseEvent) => {
+        if (!cardRef.current) return;
+        const rect = cardRef.current.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        cardRef.current.style.setProperty('--mouse-x', `${x}px`);
+        cardRef.current.style.setProperty('--mouse-y', `${y}px`);
+    };
 
     return (
-        <div className="min-h-screen px-6 py-20 lg:py-32 selection:bg-[#C5A059]/30">
-            <div className="max-w-7xl mx-auto">
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.1 }}
+            onMouseMove={handleMouseMove}
+            ref={cardRef}
+            className="spotlight glass-card relative p-8 rounded-3xl group cursor-pointer h-full"
+            onClick={() => window.open(project.url, '_blank')}
+        >
+            <div className="relative z-20">
+                <div className="flex justify-between items-start mb-6">
+                    <div className="p-3 rounded-2xl bg-amber-500/10 border border-amber-500/20 group-hover:border-amber-500/50 transition-colors">
+                        <div className="text-amber-500 group-hover:scale-110 transition-transform duration-500">
+                            {project.icon}
+                        </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <span className={`w-2 h-2 rounded-full ${project.status === 'online' ? 'bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)]' : 'bg-amber-500'}`} />
+                        <span className="text-[10px] uppercase tracking-widest text-zinc-500 font-semibold">
+                            {project.status}
+                        </span>
+                    </div>
+                </div>
 
-                {/* Header/Hero */}
-                <header className="text-center mb-20">
+                <h3 className="text-xl font-bold mb-3 group-hover:text-amber-400 transition-colors">
+                    {project.title}
+                </h3>
+
+                <p className="text-zinc-400 text-sm leading-relaxed mb-8 line-clamp-3">
+                    {project.description}
+                </p>
+
+                <div className="flex items-center justify-between mt-auto pt-6 border-t border-white/5">
+                    <span className="text-[11px] font-bold text-zinc-500 uppercase tracking-widest">
+                        {project.category}
+                    </span>
+                    <div className="flex items-center gap-2 text-amber-500 font-medium text-xs group-hover:gap-3 transition-all">
+                        ACESSAR <ExternalLink className="w-3 h-3" />
+                    </div>
+                </div>
+            </div>
+        </motion.div>
+    );
+};
+
+function App() {
+    return (
+        <div className="min-h-screen py-20 px-4 md:px-8 lg:px-12 bg-transparent">
+            {/* Background Central Glow */}
+            <div className="fixed inset-0 pointer-events-none overflow-hidden">
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-amber-500/5 blur-[120px] rounded-full" />
+            </div>
+
+            <div className="max-w-7xl mx-auto relative z-10">
+                {/* Header */}
+                <header className="text-center mb-24">
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.8 }}
-                        className="inline-flex items-center px-4 py-2 rounded-full glass mb-8 text-xs font-semibold tracking-[0.2em] uppercase text-[#C5A059]"
+                        className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 mb-8"
                     >
-                        <ShieldCheck size={14} className="mr-2" /> ECOSSISTEMA FALCOTECH
+                        <Database className="w-4 h-4 text-amber-500" />
+                        <span className="text-[10px] text-amber-500 font-bold uppercase tracking-[0.2em]">Hub Falcotech v2.0</span>
                     </motion.div>
 
-                    <motion.h1
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, delay: 0.1 }}
-                        className="text-5xl lg:text-7xl font-bold mb-6 tracking-tighter"
-                    >
+                    <h1 className="text-5xl md:text-7xl font-black mb-6 tracking-tight">
                         Sistemas <span className="gold-gradient-text">RF - Falco</span>
-                    </motion.h1>
+                    </h1>
 
-                    <motion.p
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, delay: 0.2 }}
-                        className="text-gray-400 text-lg lg:text-xl max-w-2xl mx-auto leading-relaxed"
-                    >
-                        Bem-vindo ao centro de comando. Selecione a plataforma abaixo para gerir seus processos, leads e finanças com máxima eficiência.
-                    </motion.p>
+                    <p className="text-zinc-500 text-lg md:text-xl max-w-2xl mx-auto font-medium">
+                        Central de comando integrada para gestão jurídica, financeira e automação de marketing.
+                    </p>
                 </header>
 
-                {/* Projects Grid */}
-                <main className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {/* Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
                     {projects.map((project, index) => (
-                        <ProjectCard key={index} {...project} />
+                        <ProjectCard key={project.id} project={project} index={index} />
                     ))}
-                </main>
+                </div>
 
                 {/* Footer */}
-                <footer className="mt-24 text-center border-t border-white/5 pt-10">
-                    <p className="text-gray-500 text-sm font-light">
-                        &copy; {new Date().getFullYear()} <span className="font-semibold text-[#C5A059]">Falcotech</span>. Todos os direitos reservados.
+                <footer className="mt-32 text-center">
+                    <div className="flex items-center justify-center gap-8 text-zinc-600 mb-8">
+                        <div className="flex items-center gap-2">
+                            <Globe className="w-4 h-4" />
+                            <span className="text-xs font-semibold tracking-widest uppercase">Global Network</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <Database className="w-4 h-4" />
+                            <span className="text-xs font-semibold tracking-widest uppercase">Supabase Cloud</span>
+                        </div>
+                    </div>
+                    <p className="text-[10px] text-zinc-700 font-bold uppercase tracking-[0.3em]">
+                        © 2026 Falco Assessoria Jurídica. All rights reserved.
                     </p>
                 </footer>
             </div>
-
-            {/* Visual Decoration */}
-            <div className="fixed top-0 left-0 w-full h-full -z-20 overflow-hidden pointer-events-none">
-                <div className="absolute top-[10%] left-[5%] w-[400px] h-[400px] bg-[#C5A059]/5 rounded-full blur-[120px]" />
-                <div className="absolute bottom-[10%] right-[5%] w-[300px] h-[300px] bg-[#C5A059]/3 rounded-full blur-[100px]" />
-            </div>
         </div>
     );
-};
+}
 
 export default App;

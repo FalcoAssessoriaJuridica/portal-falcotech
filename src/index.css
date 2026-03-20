@@ -1,80 +1,84 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
-    font-family: 'Montserrat', system-ui, Avenir, Helvetica, Arial, sans-serif;
+    font-family: 'Geist', sans-serif;
     line-height: 1.5;
     font-weight: 400;
 
     color-scheme: dark;
     color: rgba(255, 255, 255, 0.87);
-    background-color: #050505;
 
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-
-    --gold: #C5A059;
-    --gold-light: #D4B478;
-    --gold-dark: #A6823F;
-    --glass: rgba(255, 255, 255, 0.03);
-    --glass-border: rgba(255, 255, 255, 0.08);
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
 }
 
 body {
-    min-height: 100vh;
+    margin: 0;
     display: flex;
-    flex-direction: column;
-    background: radial-gradient(circle at top right, #1a1a1a, #050505 40%),
-        radial-gradient(circle at bottom left, #121212, #050505 40%);
-    background-attachment: fixed;
+    place-items: center;
+    min-width: 320px;
+    min-height: 100vh;
+    background: radial-gradient(circle at center, #18181b 0%, #09090b 100%);
     overflow-x: hidden;
 }
 
 #root {
     width: 100%;
-    min-height: 100vh;
 }
 
-a {
-    text-decoration: none;
-    color: inherit;
+@layer components {
+    .glass-card {
+        @apply backdrop-blur-xl bg-white/[0.02] border border-amber-500/10 transition-all duration-500;
+    }
+
+    .glass-card:hover {
+        @apply border-amber-500/40 bg-white/[0.04] shadow-[0_0_30px_rgba(245, 158, 11, 0.1)];
+    }
+
+    .spotlight {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .spotlight::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(400px circle at var(--mouse-x) var(--mouse-y),
+                rgba(245, 158, 11, 0.1),
+                transparent 40%);
+        z-index: 10;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+    }
+
+    .spotlight:hover::before {
+        opacity: 1;
+    }
+
+    .gold-gradient-text {
+        @apply bg-gradient-to-br from-amber-200 via-amber-400 to-amber-600 bg-clip-text text-transparent;
+    }
+
+    .gold-gradient-bg {
+        @apply bg-gradient-to-br from-amber-200 via-amber-400 to-amber-600;
+    }
 }
 
-/* Custom Scrollbar */
+/* Scrollbar customization */
 ::-webkit-scrollbar {
-    width: 8px;
+    width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-    background: #050505;
+    @apply bg-zinc-950;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #333;
-    border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: var(--gold);
-}
-
-/* Glassmorphism Utilities */
-.glass {
-    background: var(--glass);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid var(--glass-border);
-}
-
-.gold-gradient-text {
-    background: linear-gradient(to right, var(--gold-light), var(--gold-dark));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    @apply bg-zinc-800 rounded-full hover:bg-amber-500/50;
 }
