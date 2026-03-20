@@ -151,7 +151,9 @@ function App() {
         const root = window.document.documentElement;
         if (theme === 'light') {
             root.classList.add('light');
+            root.classList.remove('dark');
         } else {
+            root.classList.add('dark');
             root.classList.remove('light');
         }
         localStorage.setItem('portal-theme', theme);
@@ -206,7 +208,7 @@ function App() {
                         Sistemas <span className="gold-gradient-text">RF - Falco</span>
                     </h1>
 
-                    <p className="text-slate-600 dark:text-zinc-500 text-lg md:text-xl max-w-2xl mx-auto font-medium">
+                    <p className="text-slate-600 dark:text-zinc-400 text-lg md:text-xl max-w-2xl mx-auto font-medium">
                         Central de comando integrada para gestão jurídica, financeira e automação de marketing.
                     </p>
                 </header>
