@@ -72,7 +72,7 @@ const projects: Project[] = [
         id: 'rf-cursos',
         title: 'RF Cursos - App',
         description: 'Plataforma de ensino e capacitação para profissionais do setor de serviços.',
-        url: 'http://cursos.falcotech.com.br',
+        url: 'https://rfcursos.falcotech.com.br/login',
         icon: <Cpu className="w-8 h-8" />,
         category: 'Educação',
         status: 'beta'
