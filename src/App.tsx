@@ -78,6 +78,15 @@ const projects: Project[] = [
         icon: <Cpu className="w-8 h-8" />,
         category: 'Educação',
         status: 'online'
+    },
+    {
+        id: 'extractor',
+        title: 'Extrator de Dados',
+        description: 'Ferramenta inteligente para extração, limpeza e exportação de dados jurídicos em massa.',
+        url: 'https://extrator.falcotech.com.br',
+        icon: <Database className="w-8 h-8" />,
+        category: 'Utilitários',
+        status: 'online'
     }
 ];
 
