@@ -14,81 +14,30 @@ import {
     Moon
 } from 'lucide-react';
 
+import { supabase } from './lib/supabase';
+
 interface Project {
     id: string;
     title: string;
     description: string;
     url: string;
-    icon: React.ReactNode;
+    icon_name: string;
     category: string;
     status: 'online' | 'maintenance' | 'beta';
 }
 
-const projects: Project[] = [
-    {
-        id: 'erp',
-        title: 'ERP Falco Jurídico',
-        description: 'Gestão processual completa, controle de prazos e fluxo de trabalho jurídico avançado.',
-        url: 'https://erp.falcotech.com.br',
-        icon: <Shield className="w-8 h-8" />,
-        category: 'Gestão Jurídica',
-        status: 'online'
-    },
-    {
-        id: 'crm',
-        title: 'CRM Saas Falco',
-        description: 'Pipeline de vendas, gestão de leads e automação de relacionamento com clientes.',
-        url: 'https://crm.falcotech.com.br',
-        icon: <Users className="w-8 h-8" />,
-        category: 'Vendas & Leads',
-        status: 'online'
-    },
-    {
-        id: 'finance',
-        title: 'Portal Financeiro',
-        description: 'Módulo de faturamento, gestão de contratos e integração com gateways de pagamento.',
-        url: 'https://gatewaypro.falcotech.com.br',
-        icon: <TrendingUp className="w-8 h-8" />,
-        category: 'Financeiro',
-        status: 'online'
-    },
-    {
-        id: 'lp-rodoviarios',
-        title: 'LP Rodoviários',
-        description: 'Landing page especializada para motoristas e profissionais de transporte rodoviário.',
-        url: 'https://lprodoviarios.falcotech.com.br',
-        icon: <MapPin className="w-8 h-8" />,
-        category: 'Marketing LP',
-        status: 'online'
-    },
-    {
-        id: 'lp-motoboys',
-        title: 'LP Motoboys',
-        description: 'Landing page focada em entregadores e pilotos de aplicativo com atendimento via IA.',
-        url: 'https://motoboys.falcotech.com.br',
-        icon: <Bike className="w-8 h-8" />,
-        category: 'Marketing LP',
-        status: 'online'
-    },
-    {
-        id: 'rf-cursos',
-        title: 'RF Cursos - App',
-        description: 'Plataforma de ensino e capacitação para profissionais do setor de serviços.',
-        url: 'https://rfcursos.falcotech.com.br/login',
-        icon: <Cpu className="w-8 h-8" />,
-        category: 'Educação',
-        status: 'online'
-    },
-    {
-        id: 'extractor',
-        title: 'Extrator de Dados',
-        description: 'Ferramenta inteligente para extração, limpeza e exportação de dados jurídicos em massa.',
-        url: 'https://extrator.falcotech.com.br',
-        icon: <Database className="w-8 h-8" />,
-        category: 'Utilitários',
-        status: 'online'
+const getIcon = (name: string) => {
+    switch (name) {
+        case 'Shield': return <Shield className="w-8 h-8" />;
+        case 'Users': return <Users className="w-8 h-8" />;
+        case 'TrendingUp': return <TrendingUp className="w-8 h-8" />;
+        case 'MapPin': return <MapPin className="w-8 h-8" />;
+        case 'Bike': return <Bike className="w-8 h-8" />;
+        case 'Cpu': return <Cpu className="w-8 h-8" />;
+        case 'Database': return <Database className="w-8 h-8" />;
+        default: return <Globe className="w-8 h-8" />;
     }
-];
+};
 
 const ProjectCard = ({ project, index }: { project: Project; index: number }) => {
     const cardRef = useRef<HTMLDivElement>(null);
@@ -116,7 +65,7 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
                 <div className="flex justify-between items-start mb-6">
                     <div className="p-3 rounded-2xl bg-amber-500/10 border border-amber-500/20 group-hover:border-amber-500/50 transition-colors">
                         <div className="text-amber-500 group-hover:scale-110 transition-transform duration-500">
-                            {project.icon}
+                            {getIcon(project.icon_name)}
                         </div>
                     </div>
                     <div className="flex items-center gap-2">
@@ -149,12 +98,34 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
 };
 
 function App() {
+    const [projects, setProjects] = useState<Project[]>([]);
+    const [loading, setLoading] = useState(true);
     const [theme, setTheme] = useState<'light' | 'dark'>(() => {
         if (typeof window !== 'undefined') {
             return localStorage.getItem('portal-theme') as 'light' | 'dark' || 'dark';
         }
         return 'dark';
     });
+
+    useEffect(() => {
+        const fetchProjects = async () => {
+            try {
+                const { data, error } = await supabase
+                    .from('portal_projects')
+                    .select('*')
+                    .order('sort_order', { ascending: true });
+
+                if (error) throw error;
+                setProjects(data as Project[]);
+            } catch (err) {
+                console.error('Error fetching projects:', err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchProjects();
+    }, []);
 
     useEffect(() => {
         const root = window.document.documentElement;
@@ -169,6 +140,14 @@ function App() {
     }, [theme]);
 
     const toggleTheme = () => setTheme(prev => prev === 'light' ? 'dark' : 'light');
+
+    if (loading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-transparent">
+                <div className="w-12 h-12 border-4 border-amber-500/20 border-t-amber-500 rounded-full animate-spin" />
+            </div>
+        );
+    }
 
     return (
         <div className="min-h-screen py-20 px-4 md:px-8 lg:px-12 bg-transparent transition-colors duration-500">
